@@ -46,5 +46,7 @@ public class Health : MonoBehaviour {
 		for (int i = 0; i < objectsDestroyOnDeath.Length; i++) {
 			Destroy (objectsDestroyOnDeath[i]);
 		}
+		transform.parent = null;
+		gameObject.name = "Corpse";
 	}
 }

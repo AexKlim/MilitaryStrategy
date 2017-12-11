@@ -5,6 +5,7 @@ using UnityEngine;
 public class UnitSetup : MonoBehaviour {
 	public LayerMask enemiesLayerMask;
 	public GameObject[] renderers;
+	public GameObject selection;
 
 	void Start () {
 		IdentifyEnemies ();	

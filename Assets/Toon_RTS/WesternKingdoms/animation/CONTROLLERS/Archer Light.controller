@@ -85,9 +85,6 @@ AnimatorStateTransition:
   m_PrefabInternal: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: HaveTarget
-    m_EventTreshold: 0
   - m_ConditionMode: 3
     m_ConditionEvent: Speed
     m_EventTreshold: 0.01

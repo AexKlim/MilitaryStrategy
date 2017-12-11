@@ -34,7 +34,7 @@ public class Catapult : MilitaryForcee {
 
 		switch (state) {
 		case "Seeking target":
-			target = FindTarget (100f);
+			target = FindTarget (100f, 20);
 			if (target == null) {
 				break;
 			}

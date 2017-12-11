@@ -15,7 +15,7 @@ public class Swordsman : MilitaryForcee {
 
 	public override void Start () {
 		base.Start ();
-		state = "Seeking target";
+		state = "Moving to DP";
 	}
 
 	public override void Update () {
@@ -34,8 +34,29 @@ public class Swordsman : MilitaryForcee {
 		animator.SetFloat ("Speed", agent.velocity.magnitude / 2.5f);
 
 		switch (state) {
+		case "Moving to DP":
+			if ((transform.position - (linePoints [currentPoint] + placeInSquad)).magnitude < 1f) {
+				if (currentPoint < linePoints.Length) {
+					if (currentPoint < linePoints.Length - 1) {
+						currentPoint++;
+						agent.SetDestination (linePoints [currentPoint] + placeInSquad);
+					}
+				}
+			}
+			target = FindTarget (seekRadius, 1);
+			if (target != null) {
+				state = "Moving to target";
+				break;
+			}
+			if ((transform.position - (linePoints[linePoints.Length - 1] + placeInSquad)).magnitude < 1f) {
+				state = "Seeking target";
+				agent.isStopped = true;
+				break;
+			}
+			break;
+
 		case "Seeking target":
-			target = FindTarget (100f);
+			target = FindTarget (100f, 20);
 			if (target == null) {
 				break;
 			}
