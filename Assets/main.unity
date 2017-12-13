@@ -812,7 +812,7 @@ MonoBehaviour:
   interfaceCol: {fileID: 2119022512}
   col: {fileID: 288679282}
   team1Mat: {fileID: 2100000, guid: dc851844264c22f4c81c45df6c05894f, type: 2}
-  team2Mat: {fileID: 2100000, guid: 9062d548f8941e441a84508fe9cf35c9, type: 2}
+  team2Mat: {fileID: 2100000, guid: f24d011a453b2d844956f9d487ac176d, type: 2}
   startFight: 0
 --- !u!4 &235570317
 Transform:
@@ -1659,11 +1659,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1226055401253618, guid: 90424343cbe15b94a844723c229e397b, type: 2}
       propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 95208914072822456, guid: 90424343cbe15b94a844723c229e397b,
-        type: 2}
-      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
