@@ -57,9 +57,11 @@ public class GameManager : MonoBehaviour {
 					if (teamNumber == 1) {
 						newWarrior.layer = 8;
 						newWarrior.GetComponent<UnitSetup> ().SetTeamColor (team1Mat);
+						newWarrior.GetComponent<MilitaryForcee> ().material = team1Mat;
 					} else if (teamNumber == 2) {
 						newWarrior.layer = 9;
 						newWarrior.GetComponent<UnitSetup> ().SetTeamColor (team2Mat);
+						newWarrior.GetComponent<MilitaryForcee> ().material = team2Mat;
 					}
 				}
 			}

@@ -11,41 +11,52 @@ public class UnitSelection : MonoBehaviour {
 	public List<GameObject> selectedUnits;
 	public GameObject selectedSquad;
 	public float lineCutSize;
+	GameManager gameManager;
+	public bool deletingUnits;
 
 	Collider col;
 
 
 	void Awake () {
 		selectedUnits = new List<GameObject> ();
-		col = FindObjectOfType<GameManager> ().col;
+		gameManager = FindObjectOfType<GameManager> ();
+		col = gameManager.col;
 	}
 
 	void Update () {
 		if (Input.GetMouseButtonDown (0)) {
-			SelectSquad();
-			if(selectedSquad != null)
-				selectedSquad.transform.Find("Line").GetComponent<LineRenderer> ().positionCount = 1;
+			if (!deletingUnits) {
+				SelectSquad ();
+				if (selectedSquad != null && !gameManager.startFight)
+					selectedSquad.transform.Find ("Line").GetComponent<LineRenderer> ().positionCount = 1;
+			} else {
+				DeleteSquad ();
+			}
 		}
 
-		if (Input.GetMouseButton (0) && selectedSquad != null) {
-			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-			RaycastHit hit;
-			LineRenderer lr = selectedSquad.transform.Find("Line").GetComponent<LineRenderer> ();
-			if (col.Raycast (ray, out hit, 1000f)) {
-				if ((lr.GetPosition (lr.positionCount - 1) - hit.point).magnitude >= lineCutSize) {
-					lr.positionCount++;
-					lr.SetPosition (lr.positionCount - 1, hit.point + new Vector3(0, 0.1f, 0));
+		if (Input.GetMouseButton (0) && selectedSquad != null && !gameManager.startFight) {
+			if (!deletingUnits) {
+				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+				RaycastHit hit;
+				LineRenderer lr = selectedSquad.transform.Find ("Line").GetComponent<LineRenderer> ();
+				if (col.Raycast (ray, out hit, 1000f)) {
+					if ((lr.GetPosition (lr.positionCount - 1) - hit.point).magnitude >= lineCutSize) {
+						lr.positionCount++;
+						lr.SetPosition (lr.positionCount - 1, hit.point + new Vector3 (0, 0.1f, 0));
+					}
 				}
 			}
 		}
 
 		if (Input.GetMouseButtonUp (0) && selectedSquad != null) {
-			MilitaryForcee[] units = selectedSquad.transform.GetComponentsInChildren<MilitaryForcee> ();
-			LineRenderer lr = selectedSquad.transform.Find("Line").GetComponent<LineRenderer> ();
-			foreach (MilitaryForcee unit in units) {
-				unit.linePoints = new Vector3[lr.positionCount];
-				for (int i = 0; i < lr.positionCount; i++) {
-					unit.linePoints [i] = lr.GetPosition (i);
+			if (!deletingUnits) {
+				MilitaryForcee[] units = selectedSquad.transform.GetComponentsInChildren<MilitaryForcee> ();
+				LineRenderer lr = selectedSquad.transform.Find ("Line").GetComponent<LineRenderer> ();
+				foreach (MilitaryForcee unit in units) {
+					unit.linePoints = new Vector3[lr.positionCount];
+					for (int i = 0; i < lr.positionCount; i++) {
+						unit.linePoints [i] = lr.GetPosition (i);
+					}
 				}
 			}
 		}
@@ -112,6 +123,19 @@ public class UnitSelection : MonoBehaviour {
 				units.GetChild (i).GetComponent<MilitaryForcee> ().isSelected = true;
 				units.GetChild (i).GetComponent<UnitSetup> ().selection.SetActive (true);
 			}
+		}
+	}
+
+	private void DeleteSquad(){
+		GameObject squad = null;
+		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+		RaycastHit hit;
+		Physics.Raycast (ray, out hit, 1000f, militaryForceMask);
+		if (hit.collider != null) {
+			squad = hit.collider.transform.parent.parent.gameObject;
+		}
+		if (squad != null) {
+			Destroy (squad);
 		}
 	}
 }

@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class Catapult : MilitaryForcee {
 	public GameObject shellPrefab;
-	public float force;
+	public float shellExplosionRadius;
 	public Transform firePos;
-	public float attackDmg;
-	public float attackRange;
-	public string state;
-	[Range (0.1f, 5f)]public float reseekTargetTime;
-	private float reseekTargetTimer;
 
 	public override void Awake(){
 		base.Awake ();
@@ -18,88 +13,22 @@ public class Catapult : MilitaryForcee {
 
 	public override void Start () {
 		base.Start ();
-		state = "Seeking target";
-		agent.stoppingDistance = attackRange;
 	}
 
 	public override	void Update () {
-		if (!gameManager.startFight)
-			return;
-		if (GetComponent<Health> ().dead)
-			return;
-		float distanceToTarget = 99999999999999999f;
-		if(target!=null)
-			distanceToTarget = (transform.position - target.transform.position).magnitude;
-		animator.SetFloat ("Speed", agent.velocity.magnitude / 2.5f);
-
-		switch (state) {
-		case "Seeking target":
-			target = FindTarget (100f, 20);
-			if (target == null) {
-				break;
-			}
-			if (distanceToTarget > attackRange) {
-				state = "Moving to target";
-			} else {
-				state = "Attacking";
-			}
-			break;
-
-		case "Moving to target":
-			if (target == null) {
-				state = "Seeking target";
-				agent.isStopped = true;
-				break;
-			}
-			if (target.GetComponent<Health>().dead) {
-				state = "Seeking target";
-				animator.SetBool ("Attack", false);
-				agent.isStopped = true;
-				break;
-			}
-			if(reseekTargetTimer >= reseekTargetTime){
-				state = "Seeking target";
-				reseekTargetTimer = 0;
-				break;
-			}
-			if (distanceToTarget <= attackRange) {
-				state = "Attacking";
-				agent.isStopped = true;
-				break;
-			}
-			animator.SetBool ("Attack", false);
-			agent.isStopped = false;
-			MoveToTarget ();
-			reseekTargetTimer += Time.deltaTime;
-			break;
-
-		case "Attacking":
-			if (target == null) {
-				state = "Seeking target";
-				animator.SetBool ("Attack", false);
-				agent.isStopped = true;
-				break;
-			}
-			if (target.GetComponent<Health>().dead) {
-				state = "Seeking target";
-				animator.SetBool ("Attack", false);
-				agent.isStopped = true;
-				break;
-			}
-			if (distanceToTarget > attackRange) {
-				state = "Moving to target";
-				animator.SetBool ("Attack",false);
-			}
-			transform.LookAt (target.transform);
-			animator.SetBool ("Attack",true);
-			break;
-		}
+		base.Update ();
 	}
 
 	void Shoot(){
+		animator.SetBool ("Attack", false);
 		if (target != null && target.GetComponent<Health> ()) {
 			GameObject rock = Instantiate (shellPrefab, firePos.position, firePos.rotation);
-			rock.GetComponent<Rigidbody> ().AddForce (firePos.forward * force);
+			float length = Mathf.Sqrt (((firePos.transform.position - target.transform.position).magnitude * Physics.gravity.y) / Mathf.Sin(firePos.localRotation.eulerAngles.x * Mathf.Deg2Rad * 2));
+			Vector3 velocityy = firePos.forward * length;
+			rock.GetComponent<Rigidbody> ().velocity = velocityy;
+			rock.GetComponent<Rock> ().maxDmg = attackDmg;
+			rock.GetComponent<Rock> ().owner = gameObject;
+			rock.GetComponent<Rock> ().explosionRadius = shellExplosionRadius;
 		}
 	}
 }

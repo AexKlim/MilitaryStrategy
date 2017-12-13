@@ -23,8 +23,9 @@ GameObject:
   - component: {fileID: 23425863582320866}
   - component: {fileID: 135504372594774936}
   - component: {fileID: 54099265993677488}
+  - component: {fileID: 114416202705152738}
   m_Layer: 0
-  m_Name: WK_Catapult_rock
+  m_Name: Rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,6 +98,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &114416202705152738
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1407271545126900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf1e57cce3e047846b5235ae26df6617, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 0}
+  maxDmg: 0
+  explosionRadius: 0
+  mask:
+    serializedVersion: 2
+    m_Bits: 768
 --- !u!135 &135504372594774936
 SphereCollider:
   m_ObjectHideFlags: 1

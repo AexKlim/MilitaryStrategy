@@ -1818,7 +1818,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1957742307104428}
-  m_LocalRotation: {x: 0.5665557, y: -0.41841003, z: -0.5592688, w: -0.43722567}
+  m_LocalRotation: {x: 0.5665556, y: -0.41840997, z: -0.5592687, w: -0.4372256}
   m_LocalPosition: {x: 0.07355883, y: -0.007863895, z: -0.089042425}
   m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
   m_Children:
@@ -3014,17 +3014,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f9dbef9748b8fb46a861dcef2883069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  reloadingTime: 1.5
-  isSelected: 0
-  seekRadius: 5
-  linePoints: []
-  placeInSquad: {x: 0, y: 0, z: 0}
-  currentPoint: 0
   attackDmg: 20
   attackRange: 1
-  state: 
+  reloadingTime: 1.5
+  seekRadius: 5
+  material: {fileID: 0}
   reseekTargetTime: 1
+  isSelected: 0
+  linePoints: []
+  placeInSquad: {x: 0, y: 0, z: 0}
+  state: 0
 --- !u!114 &114266338429400780
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3163,6 +3162,8 @@ MonoBehaviour:
   componentsDestroyOnDeath:
   - {fileID: 114367481809553556}
   - {fileID: 195093486464465104}
+  - {fileID: 114212120643980180}
+  - {fileID: 114720762882437028}
   objectsDestroyOnDeath:
   - {fileID: 1987295263907034}
   - {fileID: 1042285783460090}

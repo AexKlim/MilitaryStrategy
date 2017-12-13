@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,18 +36,28 @@ public class Health : MonoBehaviour {
 	}
 
 	void OnDeath(){
-		animator.SetInteger ("DeathNum", Random.Range(1,3));
+		animator.SetInteger ("DeathNum", UnityEngine.Random.Range(1,3));
 		animator.SetBool ("Dead", true);
 		dead = true;
+		//Destroy (gameObject,10f);
+		transform.parent = null;
+		gameObject.name = "Corpse";
+		if (gameObject.layer == 8) {
+			Text team1CountText = GameObject.Find("Interface").GetComponent<Interface>().team1Count.GetComponent<Text> ();
+			team1CountText.text = (Convert.ToInt32 (team1CountText.text) - 1).ToString ();
+		} else if(gameObject.layer == 9){
+			Text team2CountText = GameObject.Find("Interface").GetComponent<Interface>().team2Count.GetComponent<Text> ();
+			team2CountText.text = (Convert.ToInt32 (team2CountText.text) - 1).ToString ();
+		}
 		gameObject.layer = 10;
-		Destroy (gameObject,10f);
+	}
+
+	public void BecomeCourpse(){  //Выполняется в последний кадр анимации смерти
 		for (int i = 0; i < componentsDestroyOnDeath.Length; i++) {
 			Destroy (componentsDestroyOnDeath[i]);
 		}
 		for (int i = 0; i < objectsDestroyOnDeath.Length; i++) {
 			Destroy (objectsDestroyOnDeath[i]);
 		}
-		transform.parent = null;
-		gameObject.name = "Corpse";
 	}
 }

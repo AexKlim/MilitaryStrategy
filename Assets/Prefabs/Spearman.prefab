@@ -2956,7 +2956,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1695460158606748}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: 635180035812f964db1d9529cbb170f2, type: 3}
   m_Controller: {fileID: 9100000, guid: 2889a272482775446b4abe532f6c9702, type: 2}
   m_CullingMode: 1
@@ -2983,6 +2983,8 @@ MonoBehaviour:
   componentsDestroyOnDeath:
   - {fileID: 195762009044595630}
   - {fileID: 114076540205331694}
+  - {fileID: 114896846270728344}
+  - {fileID: 114006495103668568}
   objectsDestroyOnDeath:
   - {fileID: 1639095413954982}
   - {fileID: 1266254091437954}
@@ -3140,17 +3142,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f9dbef9748b8fb46a861dcef2883069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  reloadingTime: 2
-  isSelected: 0
-  seekRadius: 5
-  linePoints: []
-  placeInSquad: {x: 0, y: 0, z: 0}
-  currentPoint: 0
   attackDmg: 25
   attackRange: 2
-  state: 
+  reloadingTime: 2
+  seekRadius: 5
+  material: {fileID: 0}
   reseekTargetTime: 1
+  isSelected: 0
+  linePoints: []
+  placeInSquad: {x: 0, y: 0, z: 0}
+  state: 0
 --- !u!114 &114910666645358058
 MonoBehaviour:
   m_ObjectHideFlags: 1
